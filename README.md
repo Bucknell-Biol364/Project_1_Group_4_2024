@@ -1,8 +1,8 @@
 # Project_1 R Tutorial
 
 ## Authors
-Hedyeh Davoudi Kianersi
-Thomas Mazzarulli 
+-Hedyeh Davoudi Kianersi
+-Thomas Mazzarulli 
 
 #git config pull.rebase false - can use dropdown on pull menu to pull with 
 #rebase automatically
