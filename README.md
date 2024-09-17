@@ -3,6 +3,7 @@
 ## Authors
 -Hedyeh Davoudi Kianersi
 -Thomas Mazzarulli 
+- Cassie Pagnozzi
 
 #git config pull.rebase false - can use dropdown on pull menu to pull with 
 #rebase automatically
