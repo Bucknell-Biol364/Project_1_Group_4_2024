@@ -2,7 +2,7 @@
 
 ## Authors
 
-
+- Thomas Mazzarulli 
 
 ## Target Audience
 
