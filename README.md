@@ -2,9 +2,7 @@
 
 ## Authors
 Hedyeh Davoudi Kianersi
-
-
-- Thomas Mazzarulli 
+Thomas Mazzarulli 
 
 ## Target Audience
 
