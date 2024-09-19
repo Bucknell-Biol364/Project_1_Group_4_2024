@@ -4,10 +4,6 @@
 -Hedyeh Davoudi Kianersi
 -Thomas Mazzarulli 
 -Cassie Pagnozzi
-<<<<<<< HEAD
-=======
-
->>>>>>> 0d9b22e7e6835d8fb27147ac8b982a278acaa737
 
 ## Target Audience
 
