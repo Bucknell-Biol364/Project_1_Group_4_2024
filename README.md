@@ -3,14 +3,7 @@
 ## Authors
 -Hedyeh Davoudi Kianersi
 -Thomas Mazzarulli 
-- Cassie Pagnozzi
-
-#git config pull.rebase false - can use dropdown on pull menu to pull with 
-#rebase automatically
-#We can make branches off the project to prevent conflicts until the end 
-## Guidelines:
-#pull before starting to work/edit
-
+-Cassie Pagnozzi
 
 ## Target Audience
 
