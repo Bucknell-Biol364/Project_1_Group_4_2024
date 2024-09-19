@@ -6,7 +6,7 @@
 -Cassie Pagnozzi
 
 ## Target Audience
-Code chunks, how to explore the data, graphing, statistical test, graph scales, 
+Our target audience are students in Biology 204. Some experiences with R but not advanced level. No experiences with markdown 
 
 ## Instructions
 Have RStudio downloaded and make sure it is updated to the latest version
