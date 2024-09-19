@@ -1,6 +1,6 @@
 ---
 title: "Thomas_section"
-output: pdf_document
+output: github_document
 date: "2024-09-19"
 ---
 
