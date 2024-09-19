@@ -20,6 +20,10 @@ penguins <- read.csv("palmerpenguins_extended.csv")
 
 ```
 
+Note that you have to use the "scale_color_viridis_d("") command if you want 
+to use viridis with discrete variables, and plots like histograms require the 
+scale_fill_viridis("") command instead. Color scheme options are "magma" (or "A") "inferno" (or "B") "plasma" (or "C") "viridis" (or "D") "cividis" (or "E") "rocket" (or "F") "mako" (or "G") and "turbo" (or "h"). We should decide on a consistent one together.
+
 ```{r INSTALLING VIRIDIS + GRAPH Example}
 
 install.packages("viridis")
