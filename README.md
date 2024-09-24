@@ -8,20 +8,21 @@
 ## Target Audience
 Our target audience are students in Biology 204. Some experiences with R but not advanced level. No experiences with markdown 
 
-## Instructions
+## Instructions and Accessing R Tutorial
 Have RStudio downloaded and make sure it is updated to the latest version
 Open GitHub on your web browser and access the Bucknell-Biol 364 Repository 
 Search for Project_1_Group_4_2024, click the green code button on the top right of the repo, and click “download zip” to load the documents into your folder- move these files into a folder you can easily access
 Open R Studio again and find these documents using the files tab in the bottom right corner of R
 Click on Project01.Rmd to load the tutorial!
 
+
 ## Objectives
-Learn how to properly use code chunks, make comments, and properly format an RMD file. 
-Generating dataframes from imported data, understanding different variable and data types in R 
-Organizing and mutating/manipulating dataframes, removing outliers and N/A values
-Assessing normality and determining which statistical tests to use 
-Generating visually appealing graphs 
-Combining figures with their respective statistical tests 
+Learn how to properly use code chunks, make comments, and properly format an RMD file - Cassie
+Generating data frames from imported data, understanding different variable and data types in R - Thomas 
+Organizing and mutating/manipulating dataframes, removing outliers and N/A values Hedy
+Assessing normality and determining which statistical tests to use- Cassie
+Generating visually appealing graphs Hedy 
+Combining figures with their respective statistical tests - Thomas
 
 ## Hypothesis/examples
 Penguins of the same species will have different mean body masses based on their location
