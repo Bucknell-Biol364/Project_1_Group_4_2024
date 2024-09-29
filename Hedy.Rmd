@@ -4,26 +4,113 @@ output: pdf_document
 date: "2024-09-24"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+```{r}
+# Load other packages here.
+if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
+if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
+conflict_prefer_all("dplyr", quiet = TRUE)
 ```
 
-## R Markdown
+### Project one 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+During data exploration, particularly with complex datasets, it is often necessary to manipulate the DataFrame. This may involve removing columns that do not provide significant information or grouping specific data of interest to facilitate a more efficient data analysis process. In order to do this we will show some functions which are part of tidyverse package.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+The group_by function is utilized to examine the relationships among specific columns in a dataset. In this case, we aim to investigate the relationship between island location, dietary sources, and body mass. Our hypothesis posits that the geographical location of an island may influence the dietary habits of the animals, subsequently impacting their body mass.
 
-```{r cars}
-summary(cars)
+```{r groupby}
+palmerpenguins_extended |> 
+  group_by(island, diet, body_mass_g) |>
+  summarize(meanMass=mean(body_mass_g, na.rm = TRUE))
+```
+By running the code chunk above we can see that interpretation of the data became much easier.  
+
+Next, we will incorporate an additional column into our dataset. For example, to assess the Body Condition Index (BCI), we should divide the total body mass by the lengths of the body parts. To do so we need to use mutate function which again is one part of tidyverse package.
+```{r mutate}
+palmerpenguins_extended <- mutate(palmerpenguins_extended, BCI = body_mass_g / flipper_length_mm)
+summary(palmerpenguins_extended$BCI)
+```
+By running the code chunk above we can see that we added an extra column to our existed data set named BCI.
+
+Next, when want to make subsets of rows from a data frame we can use filter function. This allows us to make another dataset which make the data interpretation easier. 
+Here by running the code chunk we can see that we made another data set called palmerpenguins_extended.filter which has 2826 observations with 12 variables and we can see there 2826 observations for penguins under 6038 g.
+
+```{r filter}
+palmerpenguins_extended.filter <- filter(palmerpenguins_extended, body_mass_g < 6038)
+dim(palmerpenguins_extended.filter)
 ```
 
-## Including Plots
+###Second part 
 
-You can also embed plots, for example:
+Analytical graphics play a vital role in data analysis, making it essential to select the appropriate method for visualizing our data.
+making histograms with the data that you want to explore is one of the easiest way to visualize your data and to see if the data has the normal distribution. 
+By looking at our code chunk we can see that we used the color, fill, and bins commands to make our histogram better and easier to interpret the data.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r histogram}
+ggplot(palmerpenguins_extended) +
+  aes(x=body_mass_g) +
+  geom_histogram(color = "black", fill = "white", bins = 30)
+```
+ggplot is a powerful tool in R to make more sophisticated graphs. Here we will break down this function to details to make it more clear.
+
+Fist we should start by choosing the data frame and the variable that we want to visualize 
+
+Aesthetics (aes): Defines how data variables map to visual properties (e.g., x and y axes, colors, shapes). For example: aes(x = variable1, y = variable2)
+
+geom_ functions define the type of plot (e.g., points, lines, bars) and common geoms include:
+geom_point(): scatter plots
+geom_line(): line graphs
+geom_bar(): bar charts
+geom_histogram(): histograms (which we saw in the code chunk above)
+
+Facets function splits data into subplots based on a factor which includes facet_wrap(~ variable) or facet_grid(rows ~ columns).
+
+Finally, to make our plots more presentable we can use different themes to customize the appearance of the plot such as: Theme_ cowplot(), theme_minimal(), theme_classic(), 
+
+Here lets see these functions step by step.
+
+```{r ggplot}
+ggplot(palmerpenguins_extended) +
+  aes(x = health_metrics) +
+  geom_bar() +
+  theme_cowplot()
+```
+Running the code chunk above allows us to compare the number of individuals based on their health metrics.
+
+Now lets make our plot more professional.
+If we wand to see the relationship between diet and body mass we can make a box plot as it is shown below.
+we can use fill function to add color to our plot and differentiate among our variables also we can chose to remove the outliers by using this command (outlier.shape = NA)
+We can see that our graph is much more presentable.
+```{r ggplot}
+ggplot(palmerpenguins_extended) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  theme_cowplot()
+```
+Also, we can add another variable to the graph. For example, here I wanted to see how the health metrics looks like in each dietary categories and how they can contribute to body mass.
+So, for the fill function I chose health_metrics
+
+```{r ggplot}
+ggplot(palmerpenguins_extended) +
+  aes(x = diet, y = body_mass_g, fill = health_metrics) +
+  geom_boxplot(outlier.shape = NA) +
+  theme_cowplot()
+```
+Finally, we can also make a lin graph which allows us to visualize and interpret the relationship among three variables: body mass, BCI, and diet.
+Here, we can see that labs function allows us to change the label of the graph and we can name each variable as we want them to be.
+```{r}
+ggplot(palmerpenguins_extended) +
+  aes(x = body_mass_g, y = BCI) +
+  geom_point(aes(color = factor(diet))) +
+  geom_smooth(method=lm , color="black", se=TRUE) +
+  theme_cowplot() +
+  labs(color="Diet") +
+  xlab("body mass (g)") + 
+  ylab("BCI")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+
