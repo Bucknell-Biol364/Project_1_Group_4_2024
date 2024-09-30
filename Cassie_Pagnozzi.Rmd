@@ -1,0 +1,25 @@
+---
+title: "Cassie Pagnozzi"
+output: pdf_document
+date: "2024-09-19"
+---
+
+```{r Load Libraries, include=FALSE}
+# Load other packages here.
+if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
+if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse)# For everything
+if (!require("viridis")) install.packages("viridis"); library(viridis)
+conflict_prefer_all("dplyr", quiet = TRUE)
+```
+
+
+```{r}
+penguins <- read.csv("palmerpenguins_extended.csv")
+```
+
+#git config pull.rebase false - can use dropdown on pull menu to pull with 
+#rebase automatically
+#We can make branches off the project to prevent conflicts until the end 
+## Guidelines:
+#pull before starting to work/edit
