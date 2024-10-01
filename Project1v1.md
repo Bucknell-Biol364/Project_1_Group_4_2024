@@ -1,5 +1,6 @@
 Group 4 Project 1
 ================
+2024-10-01
 
 ``` r
 # Load other packages here.
@@ -26,6 +27,12 @@ if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # F
     ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
     ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
     ## ✔ purrr     1.0.2
+
+``` r
+if (!require("rstatix")) install.packages("rstatix"); library(rstatix) 
+```
+
+    ## Loading required package: rstatix
 
 ``` r
 conflict_prefer_all("dplyr", quiet = TRUE)
@@ -274,6 +281,23 @@ t.test(body_mass_g ~ sex, data = penguins)
     ## mean in group female   mean in group male 
     ##             4396.510             5278.569
 
+We can also use the pairwise t-test, included in the rstatix package,
+which allows for us to compare more than two categorical variables.
+
+``` r
+pairwise_t_test(data=penguins, body_mass_g ~ diet)
+```
+
+    ## # A tibble: 6 × 9
+    ##   .y.        group1 group2    n1    n2         p p.signif     p.adj p.adj.signif
+    ## * <chr>      <chr>  <chr>  <int> <int>     <dbl> <chr>        <dbl> <chr>       
+    ## 1 body_mass… fish   krill    958  1419 4.63e-320 ****     2.32e-319 ****        
+    ## 2 body_mass… fish   paren…   958   860 0         ****     0         ****        
+    ## 3 body_mass… krill  paren…  1419   860 4.86e-169 ****     1.94e-168 ****        
+    ## 4 body_mass… fish   squid    958   193 2.01e- 21 ****     2.01e- 21 ****        
+    ## 5 body_mass… krill  squid   1419   193 3.39e- 40 ****     6.79e- 40 ****        
+    ## 6 body_mass… paren… squid    860   193 3.04e-164 ****     9.12e-164 ****
+
 Another statistical test are ANOVA, which measures the variance for
 multiple groups.
 
@@ -375,7 +399,7 @@ ggplot(penguins) +
   theme_cowplot()
 ```
 
-![](Project1v1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- --> Running
+![](Project1v1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- --> Running
 the code chunk above allows us to compare the number of individuals
 based on their health metrics.
 
@@ -393,7 +417,7 @@ ggplot(penguins) +
   theme_cowplot()
 ```
 
-![](Project1v1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](Project1v1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 Also, we can add another variable to the graph. For example, here I
 wanted to see how the health metrics looks like in each dietary
@@ -407,7 +431,7 @@ ggplot(penguins) +
   theme_cowplot()
 ```
 
-![](Project1v1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](Project1v1_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 Finally, we can also make a lin graph which allows us to visualize and
 interpret the relationship among three variables: body mass, BCI, and
@@ -427,15 +451,15 @@ ggplot(penguins) +
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](Project1v1_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](Project1v1_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ## Objective 6: Combining stats and graphs
 
 Now that we have some statistical analysis of our data, as well as some
 figures to better visualize it, the next step is to combine the two to
 allow for an easy interpretation. For the sake of this example, let’s
-see if the differences we see in the graph of diet vs body mass are
-significant. Using the package ggpubr, we can combine our statistical
+add in our results from the previously preformed pairwise t-test on diet
+and body mass. Using the package ggpubr, we can combine statistical
 tests with our graphs to create some publication-quality figures.
 
 ``` r
@@ -455,7 +479,7 @@ ggplot(penguins) +
   theme_cowplot()
 ```
 
-![](Project1v1_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](Project1v1_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 This figure displays the p-values between each of our dietary groups,
 and it seems like there’s a significant difference in weight for each of
@@ -488,7 +512,7 @@ ggplot(penguins) +
   scale_fill_viridis_d("diet")
 ```
 
-![](Project1v1_files/figure-gfm/unnamed-chunk-13-1.png)<!-- --> This
+![](Project1v1_files/figure-gfm/unnamed-chunk-14-1.png)<!-- --> This
 figure looks good, but the addition of a legend takes up a lot of space,
 and doesn’t really provide any additional information. As a final
 modification, we can remove it and generate our final figure.
@@ -512,7 +536,7 @@ ggplot(penguins) +
 theme(legend.position = "none")  
 ```
 
-![](Project1v1_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](Project1v1_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ## Acknowledgements
 
