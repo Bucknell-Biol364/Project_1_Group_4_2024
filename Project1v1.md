@@ -38,6 +38,14 @@ if (!require("rstatix")) install.packages("rstatix"); library(rstatix)
 conflict_prefer_all("dplyr", quiet = TRUE)
 ```
 
+## Penguin analysis R tutorial
+
+Throughout this tutorial, we will introduce some of the basic properties
+and functions of R, as well as some additional packages which can be
+used to enhance it’s functionality. In order to show these tools, we
+will be using the classic Palmer Penguins dataset, and exploring the
+relationships between many of the variables it includes.
+
 ## Objective 1: Using code chunks
 
 In an RMD file, code chunks are blocks of code that read commands. This
@@ -57,7 +65,9 @@ is indicated by a downwards arrow.
 
     ## [1] 10
 
-### As I have done previously, you can make comments all throughout an RMD file by beginning your statements with a hashtag (#) This prevents R from reading it as code, and instead as text.
+As I have done previously, you can make comments all throughout an RMD
+file by beginning your statements with a hashtag (#) This prevents R
+from reading it as code, and instead as text.
 
 ``` r
 #Lets try that again:

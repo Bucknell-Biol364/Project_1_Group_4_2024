@@ -25,6 +25,7 @@ Generating visually appealing graphs Hedy
 Combining figures with their respective statistical tests - Thomas
 
 ## Hypothesis/examples
+The diet of penguins influences their mass
 Penguins of the same species will have different mean body masses based on their location
 The age of the penguin will affect it’s primary diet - will need to filter out chicks as they have a parental diet 
 The island the penguins are located on affects the health condition of the penguins 
