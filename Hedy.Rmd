@@ -40,7 +40,7 @@ Next, when want to make subsets of rows from a data frame we can use filter func
 Here by running the code chunk we can see that we made another data set called palmerpenguins_extended.filter which has 2826 observations with 12 variables and we can see there 2826 observations for penguins under 6038 g.
 
 ```{r filter}
-penguins.filter <- filter(palmerpenguins_extended, body_mass_g < 6038)
+penguins.filter <- filter(penguins, body_mass_g < 6038)
 dim(penguins.filter)
 ```
 
