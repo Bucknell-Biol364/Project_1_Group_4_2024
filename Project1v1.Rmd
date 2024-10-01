@@ -8,6 +8,8 @@ output: github_document
 if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
 if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
+if (!require("rstatix")) install.packages("rstatix"); library(rstatix) 
+
 conflict_prefer_all("dplyr", quiet = TRUE)
 ```
 
@@ -86,10 +88,12 @@ penguins |>
 By running the code chunk above we can see that interpretation of the data became much easier.  
 
 Next, we will incorporate an additional column into our dataset. For example, to assess the Body Condition Index (BCI), we should divide the total body mass by the lengths of the body parts. To do so we need to use mutate function which again is one part of tidyverse package.
+
 ```{r mutate}
 penguins <- mutate(penguins, BCI = body_mass_g / flipper_length_mm)
 summary(penguins$BCI)
 ```
+
 By running the code chunk above we can see that we added an extra column to our existed data set named BCI.
 
 Next, when want to make subsets of rows from a data frame we can use filter function. This allows us to make another dataset which make the data interpretation easier. 
@@ -110,6 +114,14 @@ Depending on what data you are working with and what you want to find, you can u
 #For this example, we will be comparing the average body mass of male and female penguins, therefore our variables will be body mass and sex. 
 t.test(body_mass_g ~ sex, data = penguins)
 ```
+
+We can also use the pairwise t-test, included in the rstatix package, which allows for us to compare more than two categorical variables.
+
+```{r}
+pairwise_t_test(data=penguins, body_mass_g ~ diet)
+
+```
+
 
   Another statistical test are ANOVA, which measures the variance for multiple groups.
   
@@ -201,7 +213,7 @@ ggplot(penguins) +
 
 ## Objective 6: Combining stats and graphs
 
-Now that we have some statistical analysis of our data, as well as some figures to better visualize it, the next step is to combine the two to allow for an easy interpretation. For the sake of this example, let's see if the differences we see in the graph of diet vs body mass are significant. Using the package ggpubr, we can combine our statistical tests with our graphs to create some publication-quality figures. 
+Now that we have some statistical analysis of our data, as well as some figures to better visualize it, the next step is to combine the two to allow for an easy interpretation. For the sake of this example, let's add in our results from the previously preformed pairwise t-test on diet and body mass. Using the package ggpubr, we can combine statistical tests with our graphs to create some publication-quality figures. 
 
 ```{r}
 library(ggpubr)
