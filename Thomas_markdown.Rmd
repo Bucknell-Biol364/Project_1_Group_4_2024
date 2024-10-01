@@ -20,6 +20,110 @@ penguins <- read.csv("palmerpenguins_extended.csv")
 
 ```
 
+Now that we have imported our data into R, it's important to check that everything is 
+what we expect it to be. The CSV file that we imported has now taken the form of a dataframe in our R environment, similar to an Excel file. However, in R, each of the columns will be treated as a variable. Based on the characteristics of the data in each column, R will treat it as a certain type of variable. Using the str(penguins) function, we can get a brief summary of how R is interpreting this data.   
+
+```{r}
+str(penguins)
+```
+
+Based on the output of this command, we can see that R is interpreting variables like bill length, bill depth, flipper length, and body mass as numeric values. However, some values, such as species, sex, and island are being treated as characters. This means that R is treating them as strings of text, rather than as categories. Since our analysis requires these columns to be used as groups rather than individual strings, we need to tell R that these are categorical values, or factors. In this case, the variables species, island, sec, diet, life stage, and health metrics are all categories, rather than unique observations for each individual. 
+
+```{r}
+penguins$species <- as.factor(penguins$species)
+penguins$island <- as.factor(penguins$island)
+penguins$sex <- as.factor(penguins$sex)
+penguins$diet <- as.factor(penguins$diet)
+penguins$life_stage <- as.factor(penguins$life_stage)
+penguins$health_metrics <- as.factor(penguins$health_metrics)
+```
+
+Now that we've told R how to treat these variables, we should make sure that everything is as we expect. We can use the str() function once again to see if R is interpreting our dataframe as intended. 
+
+```{r}
+str(penguins)
+```
+
+Now we can see that our data is being interpreted correctly by R. Before we run any analysis of this data, it's important to check that the dataset we're using is complete. If there are any N/A values present, they might cause an issue. The is.na() command will tell us if any missing values are present.  
+
+```{r}
+is.na(penguins)
+```
+Wow! This command left us with a lot to interpret, as it was simply checking each value in the dataframe. With more than 3000 observations, this isn't appropriate for our dataset. However, we can use the summary() command to give us a glimpse at each of our columns, which will let us know if anything is missing. 
+
+```{r}
+summary(penguins)
+```
+
+Based on this summary, it seems that we luckily aren't missing any observations. We can now move on to our analysis. 
+
+Now that we have some statistical analysis of our data, as well as some figures to better visualize it, the next step is to combine the two to allow for an easy interpretation. Using the package ggpubr, we can combine our statistical tests with our graphs to create some publication-quality figures. 
+
+```{r}
+install.packages("ggpubr")
+library(ggpubr)
+
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      label = "p.format") +  
+  theme_cowplot()
+
+```
+
+This figure displays the p-values between each of our dietary groups, and it seems like there's a significant difference in weight for each of them! We can tidy this figure up a bit more by changing the labels. Additionally, using the viridis package, we can make the colors used in this figure more appropriate in cases of colorblindness, or if it needs to be printed in black and white. 
+
+```{r}
+library(viridis)
+
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      label = "p.format") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet")
+```
+This figure looks good, but the addition of a legend takes up a lot of space, and doesn't really provide any additional information. As a final modification, we can remove it and generate our final figure. 
+
+```{r}
+
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      label = "p.format") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet") +
+theme(legend.position = "none")  
+```
+
+Now, we have a visually appealling and easy to read figure that summarizes the relationship between the body mass of the penguins sampled and their respective diets, as well as the statistical signifigance of the differences between each of these categories. 
+
+
 Note that you have to use the "scale_color_viridis_d("") command if you want 
 to use viridis with discrete variables, and plots like histograms require the 
 scale_fill_viridis("") command instead. Color scheme options are "magma" (or "A") "inferno" (or "B") "plasma" (or "C") "viridis" (or "D") "cividis" (or "E") "rocket" (or "F") "mako" (or "G") and "turbo" (or "h"). We should decide on a consistent one together.

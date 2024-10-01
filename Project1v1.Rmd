@@ -1,0 +1,269 @@
+---
+title: "Group 4 Project 1"
+output: github_document
+---
+
+```{r}
+# Load other packages here.
+if (!require("cowplot")) install.packages("cowplot"); library(cowplot)
+if (!require("conflicted")) install.packages("conflicted"); library(conflicted) # For dealing with conflicts
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse) # For everything
+conflict_prefer_all("dplyr", quiet = TRUE)
+```
+
+## Objective 1: Using code chunks
+
+In an RMD file, code chunks are blocks of code that read commands. This is indicated by the green button with a plus sign in the upper right corner of the console. Code chunks will always begin with a title and three back ticks and end with back ticks. The code chunk will not run properly if this is not indicated correctly.  
+To run a code chunk, hit the third symbol, signified by a green arrow in the top right corner of the single chunk. 
+To run every previous code chunk, hit second button in the top right corner of the code chunk, this is indicated by a downwards arrow. 
+
+```{r Fun fact}
+#You can do math using code chunks
+2+8
+```
+
+### As I have done previously, you can make comments all throughout an RMD file by beginning your statements with a hashtag (#) This prevents R from reading it as code, and instead as text. 
+
+#```{r}
+What happens when you run code with no hashtags? Try running this code chunk to see what happens!
+penguins <- read.csv("palmerpenguins_extended.csv")
+```
+
+Error! 
+```{r Reading in our data}
+#Lets try that again:
+penguins <- read.csv("palmerpenguins_extended.csv")
+```
+Success!
+After hitting the green arrow for the particular code chunk, you can always check in the console below if you have properly read in the file. 
+
+## Objective 2: Understanding our data
+
+Now that we have imported our data into R, it's important to check that everything is 
+what we expect it to be. The CSV file that we imported has now taken the form of a dataframe in our R environment, similar to an Excel file. However, in R, each of the columns will be treated as a variable. Based on the characteristics of the data in each column, R will treat it as a certain type of variable. Using the str(penguins) function, we can get a brief summary of how R is interpreting this data.   
+
+```{r}
+str(penguins)
+```
+
+Based on the output of this command, we can see that R is interpreting variables like bill length, bill depth, flipper length, and body mass as numeric values. However, some values, such as species, sex, and island are being treated as characters. This means that R is treating them as strings of text, rather than as categories. Since our analysis requires these columns to be used as groups rather than individual strings, we need to tell R that these are categorical values, or factors. In this case, the variables species, island, sec, diet, life stage, and health metrics are all categories, rather than unique observations for each individual. 
+
+```{r}
+penguins$species <- as.factor(penguins$species)
+penguins$island <- as.factor(penguins$island)
+penguins$sex <- as.factor(penguins$sex)
+penguins$diet <- as.factor(penguins$diet)
+penguins$life_stage <- as.factor(penguins$life_stage)
+penguins$health_metrics <- as.factor(penguins$health_metrics)
+```
+
+Now that we've told R how to treat these variables, we should make sure that everything is as we expect. We can use the str() function once again to see if R is interpreting our dataframe as intended. 
+
+```{r}
+str(penguins)
+```
+
+Now we can see that our data is being interpreted correctly by R. Before we run any analysis of this data, it's important to check that the dataset we're using is complete. If there are any N/A values present, they might cause an issue. The is.na() command will tell us if any missing values are present.  
+
+```{r}
+is.na(penguins)
+```
+
+Wow! This command left us with a lot to interpret, as it was simply checking each value in the dataframe. With more than 3000 observations, this isn't appropriate for our dataset. However, we can use the summary() command to give us a glimpse at each of our columns, which will let us know if anything is missing. 
+
+```{r}
+summary(penguins)
+```
+
+Based on this summary, it seems that we luckily aren't missing any observations. We can now move on to our analysis. 
+
+## Objective 3: Manipulating our data
+
+During data exploration, particularly with complex datasets, it is often necessary to manipulate the DataFrame. This may involve removing columns that do not provide significant information or grouping specific data of interest to facilitate a more efficient data analysis process. In order to do this we will show some functions which are part of tidyverse package.
+
+The group_by function is utilized to examine the relationships among specific columns in a dataset. In this case, we aim to investigate the relationship between island location, dietary sources, and body mass. Our hypothesis posits that the geographical location of an island may influence the dietary habits of the animals, subsequently impacting their body mass.
+
+```{r groupby}
+penguins |> 
+  group_by(island, diet, body_mass_g) |>
+  summarize(meanMass=mean(body_mass_g, na.rm = TRUE))
+```
+By running the code chunk above we can see that interpretation of the data became much easier.  
+
+Next, we will incorporate an additional column into our dataset. For example, to assess the Body Condition Index (BCI), we should divide the total body mass by the lengths of the body parts. To do so we need to use mutate function which again is one part of tidyverse package.
+```{r mutate}
+penguins <- mutate(penguins, BCI = body_mass_g / flipper_length_mm)
+summary(penguins$BCI)
+```
+By running the code chunk above we can see that we added an extra column to our existed data set named BCI.
+
+Next, when want to make subsets of rows from a data frame we can use filter function. This allows us to make another dataset which make the data interpretation easier. 
+Here by running the code chunk we can see that we made another data set called palmerpenguins_extended.filter which has 2826 observations with 12 variables and we can see there 2826 observations for penguins under 6038 g.
+
+```{r filter}
+penguins.filter <- filter(penguins, body_mass_g < 6038)
+dim(penguins.filter)
+```
+
+## Objective 4: Statistics!
+
+Assessing normality and determining what statistical test to use
+Depending on what data you are working with and what you want to find, you can use various kinds of statistical tests within your RMD file. 
+  T-Tests are great for comparing the mean of the data. There are multiple kinds of t-tests you can conduct, depending on what you want to compare the mean with. 
+  
+```{r Two Sample T-Test}
+#For this example, we will be comparing the average body mass of male and female penguins, therefore our variables will be body mass and sex. 
+t.test(body_mass_g ~ sex, data = penguins)
+```
+
+  Another statistical test are ANOVA, which measures the variance for multiple groups.
+  
+```{r}
+#Here, we can test for the effect of species and sex on body mass in pengiuns
+aov(body_mass_g ~ species * sex, data = penguins)
+```
+
+  Linear regression models are also great statistical tests for estimating the linear relationship between one or more explanatory variables. 
+```{r Linear Regression Model}
+multiple_lm <- lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins)
+summary(multiple_lm)
+```
+The output from this lm displays the estimate coefficients for flipper and bill length, as well as their p-values. This information can be really helpful for how different variables can determine body mass. 
+
+Analytical graphics play a vital role in data analysis, making it essential to select the appropriate method for visualizing our data.
+making histograms with the data that you want to explore is one of the easiest way to visualize your data and to see if the data has the normal distribution. 
+By looking at our code chunk we can see that we used the color, fill, and bins commands to make our histogram better and easier to interpret the data.
+
+```{r histogram}
+ggplot(penguins) +
+  aes(x=body_mass_g) +
+  geom_histogram(color = "black", fill = "white", bins = 30)
+```
+
+## Objective 5: Graphing
+
+ggplot is a powerful tool in R to make more sophisticated graphs. Here we will break down this function to details to make it more clear.
+
+Fist we should start by choosing the data frame and the variable that we want to visualize 
+
+Aesthetics (aes): Defines how data variables map to visual properties (e.g., x and y axes, colors, shapes). For example: aes(x = variable1, y = variable2)
+
+geom_ functions define the type of plot (e.g., points, lines, bars) and common geoms include:
+geom_point(): scatter plots
+geom_line(): line graphs
+geom_bar(): bar charts
+geom_histogram(): histograms (which we saw in the code chunk above)
+
+Facets function splits data into subplots based on a factor which includes facet_wrap(~ variable) or facet_grid(rows ~ columns).
+
+Finally, to make our plots more presentable we can use different themes to customize the appearance of the plot such as: Theme_ cowplot(), theme_minimal(), theme_classic(), 
+
+Here lets see these functions step by step.
+
+```{r}
+ggplot(penguins) +
+  aes(x = health_metrics) +
+  geom_bar() +
+  theme_cowplot()
+```
+Running the code chunk above allows us to compare the number of individuals based on their health metrics.
+
+Now lets make our plot more professional.
+If we wand to see the relationship between diet and body mass we can make a box plot as it is shown below.
+we can use fill function to add color to our plot and differentiate among our variables also we can chose to remove the outliers by using this command (outlier.shape = NA)
+We can see that our graph is much more presentable.
+
+```{r}
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  theme_cowplot()
+```
+
+Also, we can add another variable to the graph. For example, here I wanted to see how the health metrics looks like in each dietary categories and how they can contribute to body mass.
+So, for the fill function I chose health_metrics
+
+```{r}
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = health_metrics) +
+  geom_boxplot(outlier.shape = NA) +
+  theme_cowplot()
+```
+
+Finally, we can also make a lin graph which allows us to visualize and interpret the relationship among three variables: body mass, BCI, and diet.
+Here, we can see that labs function allows us to change the label of the graph and we can name each variable as we want them to be.
+
+```{r}
+ggplot(penguins) +
+  aes(x = body_mass_g, y = BCI) +
+  geom_point(aes(color = factor(diet))) +
+  geom_smooth(method=lm , color="black", se=TRUE) +
+  theme_cowplot() +
+  labs(color="Diet") +
+  xlab("body mass (g)") + 
+  ylab("BCI")
+```
+
+## Objective 6: Combining stats and graphs
+
+Now that we have some statistical analysis of our data, as well as some figures to better visualize it, the next step is to combine the two to allow for an easy interpretation. For the sake of this example, let's see if the differences we see in the graph of diet vs body mass are significant. Using the package ggpubr, we can combine our statistical tests with our graphs to create some publication-quality figures. 
+
+```{r}
+library(ggpubr)
+
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      label = "p.format") +  
+  theme_cowplot()
+
+```
+
+This figure displays the p-values between each of our dietary groups, and it seems like there's a significant difference in weight for each of them! We can tidy this figure up a bit more by changing the labels. Additionally, using the viridis package, we can make the colors used in this figure more appropriate in cases of colorblindness, or if it needs to be printed in black and white. 
+
+```{r}
+library(viridis)
+
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      label = "p.format") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet")
+```
+This figure looks good, but the addition of a legend takes up a lot of space, and doesn't really provide any additional information. As a final modification, we can remove it and generate our final figure. 
+
+```{r}
+
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      label = "p.format") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet") +
+theme(legend.position = "none")  

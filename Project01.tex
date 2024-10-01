@@ -1,0 +1,371 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Group Project 1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Group Project 1}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Biology 368/664 Bucknell University}
+\author{}
+\date{\vspace{-2.5em}14 Sep 2024}
+
+\begin{document}
+\maketitle
+
+This project will require you to develop a tutorial to teach Bucknell
+students how to use R for graphing and data analysis.
+
+\subsection{Introduction}\label{introduction}
+
+Begin by introducing yourself to your group. Then discuss the biggest
+challenge that you have faced during the first three weeks of this
+course. Determine if there are any common threads in these challenges
+and start to think about objectives for the tutorial.
+
+\subsection{Target Audience}\label{target-audience}
+
+Discuss with your group the target audience for the tutorial. Examples
+could be a new student in Biology 364/664, a student in one of the new
+core Biology classes (201, 202, 203, or 204), a student in another
+300-level Biology course (not 364), or a new student in one of the
+Bucknell research groups.
+
+Edit the README.md file in your group's repository to reflect your plan.
+
+\subsection{Objectives}\label{objectives}
+
+After deciding on the target audience for your tutorial determine 2 to 3
+overall objectives for your tutorial (one per member of your group).
+These should be high-level objectives that are important skills for your
+target audience. Check with Prof.~Field to see if they are appropriate
+and then add them to your README.md file.
+
+Identify at least 2 goals within each objective and add them to your
+README.md file. These should be goals that someone who is working
+through the tutorial can self-asses. For example, ``to demostrate that
+you can test a hypothesis using a statistical model, the student should
+use a T test, linear model, or other test and interpret the p value
+appropriately.''
+
+\subsection{Grading}\label{grading}
+
+Each group will be expected to complete the following tasks to earn 85\%
+of the points available for this assignment (21/25).
+
+\begin{itemize}
+\tightlist
+\item
+  Identify and obtain suitable dataset
+\item
+  Use a Github repository and version control to collaborate on the
+  project
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Every member of the group should participate in editing the repo
+  \end{itemize}
+\item
+  Spend 4-6 hours preparing, coding, and testing tutorial
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Data exploration
+  \item
+    Data visualization
+  \item
+    Hypothesis testing
+  \end{itemize}
+\item
+  Present tutorial in class
+\item
+  Provide public archive suitable for sharing to students/faculty
+\end{itemize}
+
+Tutorials from previous classes can be viewed at our public github site:
+\url{https://github.com/Bucknell-Biol364}
+
+Each group should use an \emph{Acknowledgements} section to document the
+participation of each member and the collaboration within and between
+groups.
+
+Additional credit will be awarded for providing assistance to other
+groups or for the development of a tutorial that goes beyond the minimal
+expectations listed above. You will have the opportunity to provide
+feedback to another group after the initial deadline (like for Homework
+02).
+
+\subsection{Sample Dataset}\label{sample-dataset}
+
+One of the possible datasets to use for the tutorial can be found in the
+datasauRus package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datasaurus\_dozen }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(dataset) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarize}\NormalTok{(}
+      \AttributeTok{mean\_x    =} \FunctionTok{mean}\NormalTok{(x),}
+      \AttributeTok{mean\_y    =} \FunctionTok{mean}\NormalTok{(y),}
+      \AttributeTok{std\_dev\_x =} \FunctionTok{sd}\NormalTok{(x),}
+      \AttributeTok{std\_dev\_y =} \FunctionTok{sd}\NormalTok{(y),}
+      \AttributeTok{corr\_x\_y  =} \FunctionTok{cor}\NormalTok{(x, y)}
+\NormalTok{      )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 13 x 6
+##    dataset    mean_x mean_y std_dev_x std_dev_y corr_x_y
+##    <chr>       <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+##  1 away         54.3   47.8      16.8      26.9  -0.0641
+##  2 bullseye     54.3   47.8      16.8      26.9  -0.0686
+##  3 circle       54.3   47.8      16.8      26.9  -0.0683
+##  4 dino         54.3   47.8      16.8      26.9  -0.0645
+##  5 dots         54.3   47.8      16.8      26.9  -0.0603
+##  6 h_lines      54.3   47.8      16.8      26.9  -0.0617
+##  7 high_lines   54.3   47.8      16.8      26.9  -0.0685
+##  8 slant_down   54.3   47.8      16.8      26.9  -0.0690
+##  9 slant_up     54.3   47.8      16.8      26.9  -0.0686
+## 10 star         54.3   47.8      16.8      26.9  -0.0630
+## 11 v_lines      54.3   47.8      16.8      26.9  -0.0694
+## 12 wide_lines   54.3   47.8      16.8      26.9  -0.0666
+## 13 x_shape      54.3   47.8      16.8      26.9  -0.0656
+\end{verbatim}
+
+Compare the means and standard deviations of the 13 different datasets.
+
+Boxplots of either the x or the y value show that there are some
+differences, even though the means and standard deviations are
+identical.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datasaurus\_dozen }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{colour =}\NormalTok{ dataset)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{theme\_void}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dataset, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Project01_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datasaurus\_dozen }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ y, }\AttributeTok{colour =}\NormalTok{ dataset))}\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{()}\SpecialCharTok{+}
+    \FunctionTok{theme\_void}\NormalTok{()}\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dataset, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Project01_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+But you have to visualize all of the data with a scatter plot to really
+see the patterns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datasaurus\_dozen }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{colour =}\NormalTok{ dataset))}\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+    \FunctionTok{theme\_void}\NormalTok{()}\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{dataset, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Project01_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+And did you notice the code in the \{r\} codechunk header that
+controlled the size of the output in the Rmd? Pretty neat trick!
+
+And here are two versions of the data that you could use in your data
+visualization tutorial. To use them you would probably want to change
+the names of the datasets and also make x and y more meaningful. Then
+save them as a csv or tsv to be imported later for your tutorial.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datasaurus\_long }\OtherTok{\textless{}{-}}\NormalTok{ datasaurus\_dozen}
+\NormalTok{datasaurus\_wide }\OtherTok{\textless{}{-}}\NormalTok{ datasaurus\_dozen\_wide}
+\FunctionTok{head}\NormalTok{(datasaurus\_long)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   dataset     x     y
+##   <chr>   <dbl> <dbl>
+## 1 dino     55.4  97.2
+## 2 dino     51.5  96.0
+## 3 dino     46.2  94.5
+## 4 dino     42.8  91.4
+## 5 dino     40.8  88.3
+## 6 dino     38.7  84.9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(datasaurus\_wide)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 26
+##   away_x away_y bullseye_x bullseye_y circle_x circle_y dino_x dino_y dots_x
+##    <dbl>  <dbl>      <dbl>      <dbl>    <dbl>    <dbl>  <dbl>  <dbl>  <dbl>
+## 1   32.3   61.4       51.2       83.3     56.0     79.3   55.4   97.2   51.1
+## 2   53.4   26.2       59.0       85.5     50.0     79.0   51.5   96.0   50.5
+## 3   63.9   30.8       51.9       85.8     51.3     82.4   46.2   94.5   50.2
+## 4   70.3   82.5       48.2       85.0     51.2     79.2   42.8   91.4   50.1
+## 5   34.1   45.7       41.7       84.0     44.4     78.2   40.8   88.3   50.6
+## 6   67.7   37.1       37.9       82.6     45.0     77.9   38.7   84.9   50.3
+## # i 17 more variables: dots_y <dbl>, h_lines_x <dbl>, h_lines_y <dbl>,
+## #   high_lines_x <dbl>, high_lines_y <dbl>, slant_down_x <dbl>,
+## #   slant_down_y <dbl>, slant_up_x <dbl>, slant_up_y <dbl>, star_x <dbl>,
+## #   star_y <dbl>, v_lines_x <dbl>, v_lines_y <dbl>, wide_lines_x <dbl>,
+## #   wide_lines_y <dbl>, x_shape_x <dbl>, x_shape_y <dbl>
+\end{verbatim}
+
+\section{Acknowledgements}\label{acknowledgements}
+
+DatasauRus package and description below: Stephanie Locke
+\url{https://github.com/jumpingrivers/datasauRus}
+
+The datasauRus package wraps the awesome Datasaurus Dozen dataset, which
+contains 13 sets of x-y data. Each sub-dataset has five statistics that
+are (almost) the same in each case. (These are the mean of x, mean of y,
+standard deviation of x, standard deviation of y, and Pearson
+correlation between x and y). However, scatter plots reveal that each
+sub-dataset looks very different. The dataset is intended to be used to
+teach students that it is important to plot their own datasets, rather
+than relying only on statistics.
+
+The Datasaurus was created by Alberto Cairo and described in the paper
+\href{https://www.autodeskresearch.com/publications/samestats}{Same
+Stats, Different Graphs: Generating Datasets with Varied Appearance and
+Identical Statistics through Simulated Annealing} by Justin Matejka and
+George Fitzmaurice.
+
+In the paper, Justin and George simulate a variety of datasets that the
+same summary statistics to the Datasaurus but have very different
+distributions.
+
+This package also makes these datasets available for use as an advanced
+\href{https://en.wikipedia.org/wiki/Anscombe\%27s_quartet}{Anscombe's
+Quartet}, available in R as \texttt{anscombe}.
+
+\end{document}
