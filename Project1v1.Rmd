@@ -32,7 +32,6 @@ To run every previous code chunk, hit second button in the top right corner of t
 
 As I have done previously, you can make comments all throughout an RMD file by beginning your statements with a hashtag (#) This prevents R from reading it as code, and instead as text. 
 
- 
 ```{r Reading in our data}
 #Lets try that again:
 penguins <- read.csv("palmerpenguins_extended.csv")
