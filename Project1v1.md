@@ -52,8 +52,6 @@ is indicated by a downwards arrow.
 
 ### As I have done previously, you can make comments all throughout an RMD file by beginning your statements with a hashtag (#) This prevents R from reading it as code, and instead as text.
 
-\#`{r} What happens when you run code with no hashtags? Try running this code chunk to see what happens! penguins <- read.csv("palmerpenguins_extended.csv")`
-
 Error!
 
 ``` r
@@ -7380,3 +7378,18 @@ theme(legend.position = "none")
 ```
 
 ![](Project1v1_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+## Acknowledgements
+
+For this project, we used the extended Palmer Penguins dataset.
+
+Samy Baladram. (2023). 🐧 Palmer Penguins Dataset Extended \[Data set\].
+Kaggle. <https://doi.org/10.34740/KAGGLE/DS/3891364>
+
+Additionally, we used information from the following textbooks.
+
+Peng, R. D. (2015). Exploratory data analysis with r. Leanpub.
+<http://leanpub.next/exdata>
+
+Touchon, J. C. (2021). Applied statistics with R: A practical guide for
+the life sciences (First edition.). Oxford University Press.
