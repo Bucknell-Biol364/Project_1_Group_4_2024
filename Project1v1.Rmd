@@ -1,6 +1,8 @@
 ---
 title: "Group 4 Project 1"
+authors: "Thomas Mazzarulli, Cassie Pagnozzi, and Hedy Davoudi Kianersi"
 output: github_document
+date: "2024-10-01"
 ---
 
 ```{r}
