@@ -559,3 +559,159 @@ ggplot(penguins) +
 ```
 
 ![](Project1revised_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+This figure displays the p-values between each of our dietary groups,
+and it seems like there’s a significant difference in weight for each of
+them! We can tidy this figure up a bit more by changing the labels.
+Additionally, using the viridis package, we can make the colors used in
+this figure more appropriate in cases of colorblindness, or if it needs
+to be printed in black and white.
+
+``` r
+if (!require("viridis")) install.packages("viridis"); library(viridis)
+```
+
+    ## Loading required package: viridis
+
+    ## Loading required package: viridisLite
+
+``` r
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      method = "t.test",
+      label = "p.format") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet")
+```
+
+![](Project1revised_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+This figure looks good, but the addition of a legend takes up a lot of
+space, and doesn’t really provide any additional information. As a final
+modification, we can remove it and generate our final figure.
+
+``` r
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      method = "t.test",
+      label = "p.format") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet") +
+theme(legend.position = "none")  
+```
+
+![](Project1revised_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+Now, we have a visually appealing and easy to read figure that
+summarizes the relationship between the body mass of the penguins
+sampled and their respective diets, as well as the statistical
+significance of the differences between each of these categories.
+However, displaying these numbers in scientific notation gives us quite
+a bit of chart junk. Luckily, this package allows us to simplify, by
+specifying that labels should only be added when p values are
+significant, changing the labels argument from “label = ‘p.format’” to
+“label = ‘p.signif’”. This allows us to display our p values using the
+standard notation of asterisks, rather than displaying the entire value
+on our chart.
+
+``` r
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      method = "t.test",
+      label = "p.signif") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet") +
+theme(legend.position = "none")  
+```
+
+![](Project1revised_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+This example should outline the syntax and format used to create
+high-quality figures. Using the examples we’ve provided so far in the
+tutorial, can you create a figure that compares groups and displays the
+statistical significance of the comparison? Some interesting comparisons
+to consider may be the island penguins are found on versus their mass,
+or investigating the difference between properties such as bill and
+flipper measurements between species. The following code should provide
+a skeleton, where you can replace the sections with three question marks
+(???) with the variables you are interested in examining. The formatting
+for this figure has been excluded, to allow you to play with different
+label and theme options. An example that shows this skeleton code filled
+in will follow the acknowledgements.
+
+``` r
+ggplot(penguins) +
+  aes(x = ???, y = ???, fill = ???) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("???", "???"), 
+      c("???", "???"), 
+      c("???", "???")), method = "???", label = "???") 
+```
+
+## Acknowledgements
+
+For this project, we used the extended Palmer Penguins dataset.
+
+Samy Baladram. (2023). 🐧 Palmer Penguins Dataset Extended \[Data set\].
+Kaggle. <https://doi.org/10.34740/KAGGLE/DS/3891364>
+
+Additionally, we used information from the following textbooks.
+
+Peng, R. D. (2015). Exploratory data analysis with r. Leanpub.
+<http://leanpub.next/exdata>
+
+Touchon, J. C. (2021). Applied statistics with R: A practical guide for
+the life sciences (First edition.). Oxford University Press.
+
+Throughout this tutortial, Hedy was the leader for sections 3 and 5,
+Cassie was in charge of 1 and 4, and Thomas worked on sections 2 and 6
+and combined the rmd.
+
+## Example figure for final exercise
+
+``` r
+ggplot(penguins) +
+  aes(x = species, y = bill_length_mm, fill = species) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("Adelie", "Gentoo"), 
+      c("Adelie", "Chinstrap"), 
+      c("Gentoo", "Chinstrap")), method = "t.test", label = "p.format") +
+  theme_cowplot() + 
+  xlab("Species") + 
+  ylab("Bill Length (mm)") + 
+  scale_fill_viridis_d("species") +
+theme(legend.position = "none")  
+```
+
+![](Project1revised_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->

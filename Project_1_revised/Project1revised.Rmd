@@ -394,4 +394,22 @@ Peng, R. D. (2015). Exploratory data analysis with r. Leanpub. http://leanpub.ne
 
 Touchon, J. C. (2021). Applied statistics with R: A practical guide for the life sciences (First edition.). Oxford University Press.
 
-Throughout this tutortial, Hedy was the leader for sections 3 and 5, Cassie was in charge of 1 and 4, and Thomas worked on sections 2 and 6 and combined the rmd.  
+Throughout this tutortial, Hedy was the leader for sections 3 and 5, Cassie was in charge of 1 and 4, and Thomas worked on sections 2 and 6 and combined the rmd. 
+
+## Example figure for final exercise
+
+```{r}
+ggplot(penguins) +
+  aes(x = species, y = bill_length_mm, fill = species) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("Adelie", "Gentoo"), 
+      c("Adelie", "Chinstrap"), 
+      c("Gentoo", "Chinstrap")), method = "t.test", label = "p.format") +
+  theme_cowplot() + 
+  xlab("Species") + 
+  ylab("Bill Length (mm)") + 
+  scale_fill_viridis_d("species") +
+theme(legend.position = "none")  
+
+```
