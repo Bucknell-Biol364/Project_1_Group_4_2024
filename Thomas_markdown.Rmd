@@ -44,9 +44,9 @@ Now that we've told R how to treat these variables, we should make sure that eve
 str(penguins)
 ```
 
-Now we can see that our data is being interpreted correctly by R. Before we run any analysis of this data, it's important to check that the dataset we're using is complete. If there are any N/A values present, they might cause an issue. The is.na() command will tell us if any missing values are present.  
+Now we can see that our data is being interpreted correctly by R. Before we run any analysis of this data, it's important to check that the dataset we're using is complete. If there are any N/A values present, they might cause an issue. The is.na() command will tell us if any missing values are present. 
 
-```{r}
+```{r, results='hide'}
 is.na(penguins)
 ```
 Wow! This command left us with a lot to interpret, as it was simply checking each value in the dataframe. With more than 3000 observations, this isn't appropriate for our dataset. However, we can use the summary() command to give us a glimpse at each of our columns, which will let us know if anything is missing. 
@@ -59,9 +59,10 @@ Based on this summary, it seems that we luckily aren't missing any observations.
 
 Now that we have some statistical analysis of our data, as well as some figures to better visualize it, the next step is to combine the two to allow for an easy interpretation. Using the package ggpubr, we can combine our statistical tests with our graphs to create some publication-quality figures. 
 
+In order to accomplish this, we can use the package ggpubr. This package allows for us to complete both the functions of ggplot and our statistical analysis within the same section of code. The syntax in this package starts out the same as ggplot as shown previously, but we can add the function "stat_compare_means" to add the results of a statistical test and it's significance on to the chart. In the argument of this function, we have to specify the comparisons we want to provide the statistical tests for using the "comparisons" argument. We then have to specify which statistical method we want to use, using the "methods" argument, as well as how we want the results to be displayed, using the argument "label". Here is an an example showing the graph of the mass of penguins versus their diet categories.  
+
 ```{r}
-install.packages("ggpubr")
-library(ggpubr)
+if (!require("ggpubr")) install.packages("ggpubr"); library(ggpubr)
 
 ggplot(penguins) +
   aes(x = diet, y = body_mass_g, fill = diet) +
@@ -73,6 +74,7 @@ ggplot(penguins) +
       c("krill", "parental"), 
       c("krill", "squid"), 
       c("parental", "squid")),
+      method = "t.test",
       label = "p.format") +  
   theme_cowplot()
 
@@ -81,7 +83,7 @@ ggplot(penguins) +
 This figure displays the p-values between each of our dietary groups, and it seems like there's a significant difference in weight for each of them! We can tidy this figure up a bit more by changing the labels. Additionally, using the viridis package, we can make the colors used in this figure more appropriate in cases of colorblindness, or if it needs to be printed in black and white. 
 
 ```{r}
-library(viridis)
+if (!require("viridis")) install.packages("viridis"); library(viridis)
 
 ggplot(penguins) +
   aes(x = diet, y = body_mass_g, fill = diet) +
@@ -93,6 +95,7 @@ ggplot(penguins) +
       c("krill", "parental"), 
       c("krill", "squid"), 
       c("parental", "squid")),
+      method = "t.test",
       label = "p.format") +  
   theme_cowplot() + 
   xlab("Diet") + 
@@ -113,6 +116,7 @@ ggplot(penguins) +
       c("krill", "parental"), 
       c("krill", "squid"), 
       c("parental", "squid")),
+      method = "t.test",
       label = "p.format") +  
   theme_cowplot() + 
   xlab("Diet") + 
@@ -121,8 +125,66 @@ ggplot(penguins) +
 theme(legend.position = "none")  
 ```
 
-Now, we have a visually appealling and easy to read figure that summarizes the relationship between the body mass of the penguins sampled and their respective diets, as well as the statistical signifigance of the differences between each of these categories. 
+Now, we have a visually appealing and easy to read figure that summarizes the relationship between the body mass of the penguins sampled and their respective diets, as well as the statistical significance of the differences between each of these categories. However, displaying these numbers in scientific notation gives us quite a bit of chart junk. Luckily, this package allows us to simplify, by specifying that labels should only be added when p values are significant, changing the labels argument from "label = 'p.format'" to "label = 'p.signif'". This allows us to display our p values using the standard notation of asterisks, rather than displaying the entire value on our chart. 
 
+```{r}
+ggplot(penguins) +
+  aes(x = diet, y = body_mass_g, fill = diet) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("fish", "krill"), 
+      c("fish", "parental"), 
+      c("fish", "squid"),
+      c("krill", "parental"), 
+      c("krill", "squid"), 
+      c("parental", "squid")),
+      method = "t.test",
+      label = "p.signif") +  
+  theme_cowplot() + 
+  xlab("Diet") + 
+  ylab("Body Mass (g)") + 
+  scale_fill_viridis_d("diet") +
+theme(legend.position = "none")  
+```
+
+This example should outline the syntax and format used to create high-quality figures. Using the examples we've provided so far in the tutorial, can you create a figure that compares groups and displays the statistical significance of the comparison? Some interesting comparisons to consider may be the island penguins are found on versus their mass, or investigating the difference between properties such as bill and flipper measurements between species. The following code should provide a skeleton, where you can replace the sections with three question marks (???) with the variables you are interested in examining. The formatting for this figure has been excluded, to allow you to play with different label and theme options. An example that shows this skeleton code filled in will follow the acknowledgements. 
+
+```{r, eval = FALSE}
+
+ggplot(penguins) +
+  aes(x = ???, y = ???, fill = ???) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("???", "???"), 
+      c("???", "???"), 
+      c("???", "???")), method = "???", label = "???") 
+```
+
+
+
+### Example figure for final exercise
+
+```{r}
+ggplot(penguins) +
+  aes(x = species, y = bill_length_mm, fill = species) +
+  geom_boxplot(outlier.shape = NA) +
+  stat_compare_means(comparisons = list(
+      c("Adelie", "Gentoo"), 
+      c("Adelie", "Chinstrap"), 
+      c("Gentoo", "Chinstrap")), method = "t.test", label = "p.format") +
+  theme_cowplot() + 
+  xlab("Species") + 
+  ylab("Bill Length (mm)") + 
+  scale_fill_viridis_d("species") +
+theme(legend.position = "none")  
+
+```
+
+
+
+
+
+### Random notes etc. 
 
 Note that you have to use the "scale_color_viridis_d("") command if you want 
 to use viridis with discrete variables, and plots like histograms require the 
