@@ -21,6 +21,12 @@ penguins<- read.csv("palmerpenguins_extended.csv")
 During data exploration, particularly with complex datasets, it is often necessary to manipulate the DataFrame. This may involve removing columns that do not provide significant information or grouping specific data of interest to facilitate a more efficient data analysis process. In order to do this we will show some functions which are part of tidyverse package.
 
 The group_by function is utilized to examine the relationships among specific columns in a dataset. In this case, we aim to investigate the relationship between island location, dietary sources, and body mass. Our hypothesis posits that the geographical location of an island may influence the dietary habits of the animals, subsequently impacting their body mass.
+However, before diving into the group function it is important to talk about one one the singnificant R functions which is pipeline operator |>
+The pipe operator takes the output of one expression and passes it as the first argument to the next expression. This makes it easier to read and understand the flow of data transformations.
+•  Readability: The code reads more like a sequence of operations, making it easier to follow.
+•  Less Nesting: It reduces the need for nested function calls, which can be hard to read.
+•  Debugging: You can easily inspect the output at each step if needed, making debugging simpler.
+
 
 ```{r groupby}
 penguins |> 
@@ -43,6 +49,10 @@ Here by running the code chunk we can see that we made another data set called p
 penguins.filter <- filter(penguins, body_mass_g < 6038)
 dim(penguins.filter)
 ```
+dim() function is used to retrieve or set the dimensions of an object, such as a matrix or an array. It returns a vector containing the size of each dimension of the object.
+•	Works with matrices, arrays, and data frames.
+•	For data frames, dim() will return the number of rows and columns.
+•	It’s useful for understanding the structure of your data in R.
 
 ###Second part 
 
@@ -100,7 +110,7 @@ ggplot(penguins) +
   geom_boxplot(outlier.shape = NA) +
   theme_cowplot()
 ```
-Finally, we can also make a lin graph which allows us to visualize and interpret the relationship among three variables: body mass, BCI, and diet.
+Finally, we can also make a line graph which allows us to visualize and interpret the relationship among three variables: body mass, BCI, and diet.
 Here, we can see that labs function allows us to change the label of the graph and we can name each variable as we want them to be.
 ```{r}
 ggplot(penguins) +
